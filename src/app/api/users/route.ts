@@ -12,6 +12,11 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const apiKey = req.headers.get('X-API-KEY');
+  if (apiKey !== process.env.NEXT_PUBLIC_API_KEY) {
+    return NextResponse.json({ status: 401, message: "APIキーが無効です。" })
+  }
+  
   const body = await req.json();
   const { userName, email, password } = body;
   

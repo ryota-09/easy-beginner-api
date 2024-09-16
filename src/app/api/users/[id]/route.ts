@@ -13,6 +13,11 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  const apiKey = req.headers.get('X-API-KEY');
+  if (apiKey !== process.env.NEXT_PUBLIC_API_KEY) {
+    return NextResponse.json({ status: 401, message: "APIキーが無効です。" })
+  }
+  
   const id = params.id;
   const body = await req.json();
   const { userName, email, password } = body;

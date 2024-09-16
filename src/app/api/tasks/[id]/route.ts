@@ -13,6 +13,11 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  const apiKey = req.headers.get('X-API-KEY');
+  if (apiKey !== process.env.NEXT_PUBLIC_API_KEY) {
+    return NextResponse.json({ status: 401, message: "APIキーが無効です。" })
+  }
+
   const id = params.id;
   const body = await req.json();
   const { userId, title, description, completed, dueDate, priority } = body;
@@ -33,7 +38,12 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   return await NextResponse.json({ status: 200, data: data })
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const apiKey = req.headers.get('X-API-KEY');
+  if (apiKey !== process.env.NEXT_PUBLIC_API_KEY) {
+    return NextResponse.json({ status: 401, message: "APIキーが無効です。" })
+  }
+  
   const id = params.id;
   const { error } = await supabase.from('tasks').delete().eq('id', id);
 
