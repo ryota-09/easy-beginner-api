@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, users: data })
+  return await NextResponse.json({ status: 200, data: data })
 }
 
 export async function POST(req: NextRequest) {
@@ -25,5 +25,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, user: data })
+  return await NextResponse.json({ status: 200, data: data })
 }

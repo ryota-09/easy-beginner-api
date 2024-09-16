@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, tasks: data })
+  return await NextResponse.json({ status: 200, data: data })
 }
 
 export async function POST(req: NextRequest) {
@@ -16,11 +16,11 @@ export async function POST(req: NextRequest) {
   const { userId, title, description, completed, dueDate, priority } = body;
 
   const { data, error } = await supabase.from('tasks').insert({
-    userid: userId,
+    userId,
     title,
     description,
     completed,
-    duedate: dueDate,
+    dueDate,
     priority
   }).select()
 
@@ -28,5 +28,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, task: data })
+  return await NextResponse.json({ status: 200, data: data })
 }

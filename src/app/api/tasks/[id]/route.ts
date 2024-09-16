@@ -9,7 +9,7 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, task: data })
+  return await NextResponse.json({ status: 200, data: data })
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
@@ -18,11 +18,11 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const { userId, title, description, completed, dueDate, priority } = body;
 
   const { data, error } = await supabase.from('tasks').update({
-    userid: userId,
+    userId,
     title,
     description,
     completed,
-    duedate: dueDate,
+    dueDate,
     priority,
   }).eq('id', id);
 
@@ -30,7 +30,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, task: data })
+  return await NextResponse.json({ status: 200, data: data })
 }
 
 export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
