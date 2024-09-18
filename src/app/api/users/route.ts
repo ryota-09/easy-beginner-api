@@ -10,6 +10,7 @@ export async function GET() {
   }
 
   return await NextResponse.json({ status: 200, data: data }, {
+    status: 200,
     headers: corsHeaders
   })
 }
@@ -34,6 +35,7 @@ export async function POST(req: NextRequest) {
   }
 
   return await NextResponse.json({ status: 200, data: data }, {
+    status: 200,
     headers: corsHeaders
   })
 }

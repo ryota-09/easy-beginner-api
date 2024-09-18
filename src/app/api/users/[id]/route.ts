@@ -11,6 +11,7 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
   }
 
   return await NextResponse.json({ status: 200, task: data }, {
+    status: 200,
     headers: corsHeaders
   })
 }
@@ -36,6 +37,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 
   return await NextResponse.json({ status: 200, task: data }, {
+    status: 200,
     headers: corsHeaders
   })
 }
