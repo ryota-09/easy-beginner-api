@@ -42,3 +42,14 @@ export async function POST(req: NextRequest) {
     headers: corsHeaders
   })
 }
+
+/**
+ * fetch のプリフライトリクエストに対応するための OPTIONS メソッド
+ * @returns 
+ */
+export async function OPTIONS() {
+  return NextResponse.json(null, {
+    status: 200,
+    headers: corsHeaders
+  })
+}
