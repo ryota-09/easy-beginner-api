@@ -1,3 +1,4 @@
+import { corsHeaders } from "@/lib";
 import supabase from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,7 +9,9 @@ export async function GET() {
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, data: data })
+  return await NextResponse.json({ status: 200, data: data }, {
+    headers: corsHeaders
+  })
 }
 
 export async function POST(req: NextRequest) {
@@ -33,5 +36,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, data: data })
+  return await NextResponse.json({ status: 200, data: data }, {
+    headers: corsHeaders
+  })
 }

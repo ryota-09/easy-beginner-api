@@ -1,3 +1,4 @@
+import { corsHeaders } from "@/lib";
 import supabase from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,7 +10,9 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, data: data })
+  return await NextResponse.json({ status: 200, data: data }, {
+    headers: corsHeaders
+  })
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
@@ -35,7 +38,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, data: data })
+  return await NextResponse.json({ status: 200, data: data }, {
+    headers: corsHeaders
+  })
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
@@ -43,7 +48,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
   if (apiKey !== process.env.NEXT_PUBLIC_API_KEY) {
     return NextResponse.json({ status: 401, message: "APIキーが無効です。" })
   }
-  
+
   const id = params.id;
   const { error } = await supabase.from('tasks').delete().eq('id', id);
 
@@ -51,5 +56,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
   }
 
-  return await NextResponse.json({ status: 200, message: "削除が完了しました！" })
+  return await NextResponse.json({ status: 200, message: "削除が完了しました！" }, {
+    headers: corsHeaders
+  })
 }
