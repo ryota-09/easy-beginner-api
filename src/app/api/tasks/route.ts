@@ -2,8 +2,14 @@ import { corsHeaders } from "@/lib";
 import supabase from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  const { data, error } = await supabase.from('tasks').select('*');
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get('userId');
+  if (!userId) {
+    return NextResponse.json({ status: 400, message: "userId が指定されていません。" })
+  }
+  
+  const { data, error } = await supabase.from('tasks').select('*').eq('userId', userId);
 
   if (error) {
     return NextResponse.json({ status: 500, message: "エラーが発生しました。" })
