@@ -15,3 +15,14 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
     headers: corsHeaders
   })
 }
+
+/**
+ * fetch のプリフライトリクエストに対応するための OPTIONS メソッド
+ * @returns 
+ */
+export async function OPTIONS() {
+  return NextResponse.json(null, {
+    status: 200,
+    headers: corsHeaders
+  })
+}
