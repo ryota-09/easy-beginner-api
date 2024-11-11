@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       status,
       total_price: totalPrice,
       order_date: orderDate,
-      destination_name :destinationName,
+      destination_name: destinationName,
       destination_email: destinationEmail,
       destination_zipcode: destinationZipcode,
       destination_address: destinationAddress,
@@ -28,12 +28,15 @@ export async function POST(req: NextRequest) {
     .select();
 
   if (orderError) {
-    return NextResponse.json({ status: 500, message: "注文の保存中にエラーが発生しました。" });
+    return NextResponse.json({ status: 500, message: "注文の保存中にエラーが発生しました。" }, {
+      status: 500,
+      headers: corsHeaders
+    });
   }
 
   const orderId = orderData[0].id;
   for (const orderItem of orderList) {
-    
+
     const { productId, size, quantity, toppingIds } = orderItem;
 
     const { data: orderItemData, error: orderItemError } = await supabase
@@ -47,7 +50,10 @@ export async function POST(req: NextRequest) {
       .select();
 
     if (orderItemError) {
-      return NextResponse.json({ status: 500, message: "注文アイテムの保存中にエラーが発生しました。" });
+      return NextResponse.json({ status: 500, message: "注文アイテムの保存中にエラーが発生しました。" }, {
+        status: 500,
+        headers: corsHeaders
+      });
     }
 
     const orderItemId = orderItemData[0].id;
@@ -61,7 +67,10 @@ export async function POST(req: NextRequest) {
         });
 
       if (orderToppingError) {
-        return NextResponse.json({ status: 500, message: "トッピングの保存中にエラーが発生しました。" });
+        return NextResponse.json({ status: 500, message: "トッピングの保存中にエラーが発生しました。" }, {
+          status: 500,
+          headers: corsHeaders
+        });
       }
     }
   }
