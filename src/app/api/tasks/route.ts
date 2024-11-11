@@ -48,12 +48,13 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { userId, title, description, completed, dueDate, priority } = body;
+  const { userId , title, description, completed, dueDate, priority } = body;
+  const targetUserId = userId || "00a717b2-3e60-47be-9ea1-7797fb158efc";
 
   const { data, error } = await supabase
     .from("tasks")
     .insert({
-      userId,
+      targetUserId,
       title,
       description,
       completed,
