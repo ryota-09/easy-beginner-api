@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
   const { data, error } = await supabase
     .from("tasks")
     .insert({
-      targetUserId,
+      userId: targetUserId,
       title,
       description,
       completed,
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       priority,
     })
     .select();
-
+    console.log(error);
   if (error) {
     return NextResponse.json({
       status: 500,
